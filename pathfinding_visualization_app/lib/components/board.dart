@@ -14,17 +14,24 @@ class _NodeBoardState extends State<NodeBoard> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10),
-      child: Table(
-        border: TableBorder.all(color: Colors.green.shade200),
-        children: List.generate(
-            16,
-            (rowIndex) => TableRow(
-                children: List.generate(
-                    60,
-                    (columnIndex) =>
-                        NodeBox(node: Node(rowID: rowIndex, columnID: columnIndex, status: 'normal'))))),
-      ),
-    );
+        padding: EdgeInsets.symmetric(horizontal: 10),
+        child: Table(
+            border: TableBorder.all(color: Colors.green.shade200),
+            children: List.generate(
+                16,
+                (rowIndex) => TableRow(
+                      children: List.generate(
+                          60,
+                          (columnIndex) => DragTarget(
+                                builder:
+                                    (context, candidateItems, rejectedItems) {
+                                  return NodeBox(
+                                      node: Node(
+                                          rowID: rowIndex,
+                                          columnID: columnIndex,
+                                      ));
+                                },
+                              )),
+                    ))));
   }
 }
