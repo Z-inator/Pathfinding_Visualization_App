@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:pathfinding_visualization_app/components/algorithm_text.dart';
+import 'package:pathfinding_visualization_app/components/board.dart';
+import 'package:pathfinding_visualization_app/components/legend.dart';
 
 void main() {
   runApp(const MyApp());
@@ -30,62 +34,73 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool isDesktop = isLargeScreen(context);
-    Widget body;
-    if (isDesktop) {
-      body = Row(
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: List.generate(60, (index) => Expanded(
-          child: Column(
-            // mainAxisSize: MainAxisSize.max,
-            // crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: List.generate(16, (index) => Block()),
-          ),
-        )),
-      );
-    } else {
-      body = Row(
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: List.generate(16, (index) => Column(
-          // mainAxisSize: MainAxisSize.max,
-          // crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: List.generate(60, (index) => Block()),
-        )),
-      );
-    }
+    // Widget body;
+    // if (isDesktop) {
+    //   body = Container(
+    //     padding: EdgeInsets.symmetric(horizontal: 10),
+    //     child: Table(
+    //       border: TableBorder.all(color: Colors.green.shade200),
+    //       children: List.generate(
+    //           16,
+    //           (rowIndex) => TableRow(
+    //               children: List.generate(
+    //                   60,
+    //                   (columnIndex) =>
+    //                       Node(rowID: rowIndex, columnID: columnIndex)))),
+    //     ),
+    //   );
+    //   // Row(
+    //   //   mainAxisSize: MainAxisSize.max,
+    //   //   crossAxisAlignment: CrossAxisAlignment.stretch,
+    //   //   children: List.generate(
+    //   //       60,
+    //   //       (index) => Expanded(
+    //   //             child: Column(
+    //   //               // mainAxisSize: MainAxisSize.max,
+    //   //               // crossAxisAlignment: CrossAxisAlignment.stretch,
+    //   //               children: List.generate(16, (index) => Block()),
+    //   //             ),
+    //   //           )),
+    //   // );
+    // } else {
+    //   body = Container(
+    //     padding: EdgeInsets.symmetric(horizontal: 10),
+    //     child: Table(
+    //       border: TableBorder.all(color: Colors.green.shade200),
+    //       children: List.generate(
+    //           60,
+    //           (rowIndex) => TableRow(
+    //               children: List.generate(
+    //                   16,
+    //                   (columnIndex) =>
+    //                       Node(rowID: rowIndex, columnID: columnIndex)))),
+    //     ),
+    //   );
+    //   // Row(
+    //   //   mainAxisSize: MainAxisSize.max,
+    //   //   crossAxisAlignment: CrossAxisAlignment.stretch,
+    //   //   children: List.generate(
+    //   //       16,
+    //   //       (index) => Column(
+    //   //             // mainAxisSize: MainAxisSize.max,
+    //   //             // crossAxisAlignment: CrossAxisAlignment.stretch,
+    //   //             children: List.generate(60, (index) => Block()),
+    //   //           )),
+    //   // );
+    // }
     return Container(
       child: SafeArea(
-        top: !isDesktop,
-        bottom: !isDesktop,
-        child: Scaffold(
-          appBar: AppBar(),
-          body: body
-        )
-      ),
+          top: !isDesktop,
+          bottom: !isDesktop,
+          child: Scaffold(
+              appBar: AppBar(),
+              body: Column(
+                children: [
+                  Legend(),
+                  AlgorithmText(),
+                  NodeBoard(),
+                ],
+              ))),
     );
-  }
-}
-
-
-class Block extends StatefulWidget {
-  Block({Key? key}) : super(key: key);
-
-  @override
-  _BlockState createState() => _BlockState();
-}
-
-class _BlockState extends State<Block> {
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: AspectRatio(
-        aspectRatio: 1,
-        child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.green.shade200)
-        ),
-      ),
-    ));
   }
 }
